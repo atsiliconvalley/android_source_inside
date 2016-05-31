@@ -1,1 +1,1 @@
-include ':app', ':library', ':third_party:gif_decoder', ':third_party:disklrucache'
+include ':app', ':library' , ':third_party:gif_encoder',':third_party:gif_decoder', ':third_party:disklrucache'

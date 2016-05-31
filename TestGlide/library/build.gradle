@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+//apply plugin: 'org.robolectric'
+apply plugin: 'maven'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+apply plugin: 'jacoco'
+//apply plugin: 'com.github.kt3k.coveralls'
+
+findbugs {
+    toolVersion = FINDBUGS_VERSION
+}
+jacoco {
+    toolVersion = JACOCO_VERSION
+}
+/*coveralls {
+    jacocoReportPath = 'build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml'
+}*/
+
+dependencies {
+    compile project(':third_party:gif_decoder')
+    compile project(':third_party:gif_encoder')
+    compile project(':third_party:disklrucache')
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    //compile "com.android.support:support-v4:${SUPPORT_V4_VERSION}"
+
+    /*testCompile project(':testutil')
+    testCompile 'com.google.guava:guava-testlib:18.0'
+    testCompile "com.google.truth:truth:${TRUTH_VERSION}"
+    testCompile "junit:junit:${JUNIT_VERSION}"
+    testCompile "org.mockito:mockito-core:${MOCKITO_VERSION}"
+    testCompile "org.robolectric:robolectric:${ROBOLECTRIC_VERSION}"
+    testCompile "com.squareup.okhttp3:mockwebserver:${MOCKWEBSERVER_VERSION}"
+    testCompile "com.android.support:support-v4:${SUPPORT_V4_VERSION}"*/
+}
+
+android.testOptions.unitTests.all {
+    // configure max heap size of the test JVM
+    maxHeapSize = '2048m'
+    jvmArgs '-XX:MaxPermSize=2048m'
+}
+
+android {
+    compileSdkVersion COMPILE_SDK_VERSION as int
+    buildToolsVersion BUILD_TOOLS_VERSION as String
+
+    defaultConfig {
+        minSdkVersion MIN_SDK_VERSION as int
+        targetSdkVersion TARGET_SDK_VERSION as int
+
+        versionName VERSION_NAME as String
+
+        consumerProguardFiles 'proguard-rules.txt'
+    }
+
+    buildTypes {
+        debug {
+            //testCoverageEnabled = true
+        }
+    }
+}
+
